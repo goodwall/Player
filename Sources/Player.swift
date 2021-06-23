@@ -58,7 +58,7 @@ public protocol PlayerDelegate: AnyObject {
 
     // This is the time in seconds that the video has been buffered.
     // If implementing a UIProgressView, user this value / player.maximumDuration to set progress.
-    func playerBufferTimeDidChange(_ bufferTime: Double)
+    func playerBufferTimeDidChange(_ player: Player, bufferTime: Double)
 
     func player(_ player: Player, didFailWithError error: Error?)
 }
@@ -834,7 +834,7 @@ extension Player {
                 if strongSelf._lastBufferTime != bufferedTime {
                     strongSelf._lastBufferTime = bufferedTime
                     strongSelf.executeClosureOnMainQueueIfNecessary {
-                        strongSelf.playerDelegate?.playerBufferTimeDidChange(bufferedTime)
+                        strongSelf.playerDelegate?.playerBufferTimeDidChange(strongSelf, bufferTime: bufferedTime)
                     }
                 }
             }
